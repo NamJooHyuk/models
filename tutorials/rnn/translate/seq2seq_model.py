@@ -96,7 +96,7 @@ class Seq2SeqModel(object):
     # Sampled softmax only makes sense if we sample less than vocabulary size.
     if num_samples > 0 and num_samples < self.target_vocab_size:
       w_t = tf.get_variable("proj_w", [self.target_vocab_size, size], dtype=dtype)
-      w = tf.transpose(w_t)
+      w = tf.transpose(w_t)  #转置
       b = tf.get_variable("proj_b", [self.target_vocab_size], dtype=dtype)
       output_projection = (w, b)
 
@@ -104,7 +104,7 @@ class Seq2SeqModel(object):
         labels = tf.reshape(labels, [-1, 1])
         # We need to compute the sampled_softmax_loss using 32bit floats to
         # avoid numerical instabilities.
-        local_w_t = tf.cast(w_t, tf.float32)
+        local_w_t = tf.cast(w_t, tf.float32) #类型转换函数
         local_b = tf.cast(b, tf.float32)
         local_inputs = tf.cast(logits, tf.float32)
         return tf.cast(
